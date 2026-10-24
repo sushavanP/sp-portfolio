@@ -1,0 +1,50 @@
+/* Closing illustration (DESIGN.md §8.1): a watercolour of Kolkata at dusk,
+   blended into the paper. */
+
+.valley {
+  position: relative;
+  z-index: 1;
+  /* Bleeds upward under the closing text, as the SVG valley did */
+  margin-top: -40px;
+}
+.valley__frame {
+  position: relative;
+  width: 100%;
+  max-width: 1600px;
+  margin-inline: auto;
+  aspect-ratio: 1408 / 768;
+  overflow: hidden;
+  /* The sky dissolves into the page */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 22%);
+}
+/* Always the image's own aspect ratio; the frame crops it */
+.valley__canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  aspect-ratio: 1408 / 768;
+}
+.valley__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  /* Multiplied by --paper, so the image's white paper turns into ours */
+  filter: url(#paper-multiply);
+}
+
+/* Mobile: a taller crop, so the bridge and river stay readable */
+@media (max-width: 768px) {
+  .valley__frame {
+    aspect-ratio: auto;
+    height: 340px;
+  }
+  /* Start the crop at x≈120 of 1408 (120/768 of the 340px height), so the
+     river's left bank and the whole bridge stay in view */
+  .valley__canvas {
+    left: calc(340px * -120 / 768);
+  }
+}

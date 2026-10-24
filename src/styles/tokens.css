@@ -1,0 +1,31 @@
+/* DESIGN.md §3 colour, §4 type scale, §5 spacing. No raw hex in components.
+   Light only: the dark theme was removed at the owner's request. */
+
+:root {
+  --paper:      #f4efe6;
+  --paper-deep: #ebe4d6;
+  --ink:        #1d1b18;
+  --ink-soft:   #4a4640;
+  /* DESIGN.md says #8a8378, but that's 3.3:1 on --paper and fails WCAG AA (§11)
+     for small mono labels. Same hue, darkened to 4.6:1. */
+  --muted:      #716b61;
+  --accent:     #d9481e;
+  --accent-2:   #2f5d50;
+  --river:      #8fb3c4;
+  --line:       rgba(29, 27, 24, 0.15);
+  color-scheme: light;
+
+  --fs-hero:  clamp(3.5rem, 9vw, 8.5rem);
+  --fs-h2:    clamp(2.25rem, 5vw, 4.5rem);
+  --fs-h3:    clamp(1.375rem, 2.2vw, 1.75rem);
+  --fs-body:  1.0625rem;
+  --fs-small: 0.875rem;
+  --fs-label: 0.75rem;
+
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px;  --s-5: 24px;  --s-6: 32px;
+  --s-7: 48px; --s-8: 64px; --s-9: 96px; --s-10: 128px; --s-11: 192px;
+
+  --gutter: 24px;
+  --max-w: 1280px;
+  --pad-x: clamp(16px, 5vw, 64px);
+}

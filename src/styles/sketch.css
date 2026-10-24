@@ -1,0 +1,238 @@
+/* Pass 3: the hand-drawn layer (DESIGN.md §7). Hand-drawn marks use
+   --ink or --accent only, never gradients. */
+
+/* ---------- Grain & filter defs (§7.1, §7.4) ---------- */
+
+.sketch-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.grain {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.06;
+  pointer-events: none;
+  z-index: 100;
+  mix-blend-mode: multiply;
+}
+
+/* ---------- rough.js frames (§7.2) ---------- */
+
+.rough-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  color: var(--ink);
+}
+.rough-outline,
+.rough-hatch {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+}
+.rough-solid {
+  fill: currentColor;
+  stroke: none;
+}
+
+/* Cards: paper-deep, rough frame, no shadow (§9). The CSS border is the no-JS fallback */
+.job article {
+  position: relative;
+}
+.job article .rough-frame {
+  opacity: 0.85;
+}
+
+/* Buttons: rough outline replaces the plain border once drawn */
+.btn {
+  position: relative;
+}
+.btn.is-sketched {
+  border-color: transparent;
+}
+.btn--primary .rough-frame {
+  color: var(--ink);
+}
+
+/* ---------- Timeline line ---------- */
+
+.timeline {
+  position: relative;
+}
+.timeline.is-sketched {
+  border-left-color: transparent;
+}
+.timeline-line {
+  position: absolute;
+  top: 0;
+  left: -12px;
+  width: 24px;
+  overflow: visible;
+  pointer-events: none;
+}
+.timeline-path {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  filter: url(#wobble);
+}
+.timeline-node.rough-outline {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.4;
+}
+.timeline-node.rough-solid {
+  fill: var(--paper);
+}
+
+/* ---------- rough-notation highlights (§7.3) ---------- */
+
+.mark {
+  position: relative;
+  white-space: nowrap;
+}
+.rough-annotation {
+  color: var(--accent);
+}
+
+/* ---------- Margin notes with arrows (§7.5) ---------- */
+
+.annotation {
+  display: inline-flex;
+  gap: var(--s-2);
+  pointer-events: none;
+}
+.annotation--accent-2 {
+  color: var(--accent-2);
+}
+.annotation__arrow {
+  flex: none;
+  fill: currentColor;
+}
+.annotation--left {
+  flex-direction: row-reverse;
+  align-items: flex-start;
+}
+.annotation--left .annotation__arrow {
+  width: 64px;
+  margin-top: var(--s-3);
+}
+.annotation--right {
+  align-items: flex-start;
+}
+.annotation--right .annotation__arrow {
+  width: 64px;
+  margin-top: var(--s-3);
+}
+.annotation--down {
+  flex-direction: column;
+  align-items: center;
+}
+.annotation--down .annotation__arrow {
+  width: 26px;
+}
+.annotation--downLeft {
+  flex-direction: column-reverse;
+  align-items: flex-start;
+}
+.annotation--downLeft .annotation__arrow {
+  width: 56px;
+  margin-left: calc(-1 * var(--s-6));
+}
+
+/* Hero note sits in the margin, arrow pointing back at "engineer" */
+.hero__annotation {
+  width: 22ch;
+  left: calc(100% + var(--s-6));
+  top: calc(-1 * var(--s-2));
+}
+
+/* Freight Tiger note: margin column beside the card, pointing at the metrics */
+.job {
+  position: relative;
+}
+.job__annotation {
+  position: absolute;
+  left: calc(100% + var(--s-7));
+  bottom: var(--s-9);
+  width: 14ch;
+}
+
+/* ---------- Doodles (§7.6): monoline, ink at ~25%, sparse ---------- */
+
+.hero,
+.section {
+  position: relative;
+}
+.doodle {
+  position: absolute;
+  fill: var(--ink);
+  opacity: 0.25;
+  pointer-events: none;
+}
+.doodle--hero-star {
+  width: 40px;
+  top: 22%;
+  right: 12%;
+}
+.doodle--hero-squiggle {
+  width: 80px;
+  bottom: 18%;
+  right: 22%;
+}
+.doodle--about-spark {
+  width: 32px;
+  top: 52%;
+  left: var(--pad-x);
+}
+.doodle--exp-cup {
+  width: 44px;
+  bottom: 12%;
+  right: calc(var(--pad-x) + 4%);
+}
+
+@media (max-width: 1100px) {
+  .job__annotation {
+    position: static;
+    margin-top: var(--s-4);
+    width: auto;
+  }
+  .annotation--downLeft {
+    flex-direction: row-reverse;
+    align-items: flex-start;
+  }
+  .annotation--downLeft .annotation__arrow {
+    width: 40px;
+    margin-left: 0;
+    transform: rotate(60deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero__annotation {
+    width: auto;
+  }
+  /* Inline under the tagline: point the arrow up at it */
+  .hero__annotation .annotation__arrow {
+    width: 44px;
+    transform: rotate(40deg);
+    margin-top: calc(-1 * var(--s-3));
+  }
+  .doodle--hero-squiggle,
+  .doodle--about-spark {
+    display: none;
+  }
+  .doodle--hero-star {
+    top: 16%;
+    right: 8%;
+  }
+}
