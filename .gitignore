@@ -4,3 +4,6 @@ out/
 next-env.d.ts
 *.tsbuildinfo
 .DS_Store
+
+# Original artwork, kept locally only
+kolkata-sketched.png
